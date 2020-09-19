@@ -11,7 +11,7 @@ data = PoolVector3Array( 1, 0, 1, -1, 0, 1, 1, 0, -1, -1, 0, 1, -1, 0, -1, 1, 0,
 [node name="Spatial" type="Spatial"]
 
 [node name="Player" parent="." instance=ExtResource( 1 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 25.143, 33.0803, 13.151 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 25.143, 2.13023, 13.151 )
 
 [node name="MeshInstance" type="MeshInstance" parent="."]
 transform = Transform( 100, 0, 0, 0, 1, 0, 0, 0, 100, 0, 0, 0 )

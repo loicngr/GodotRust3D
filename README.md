@@ -4,4 +4,8 @@
 - ```shell
     cd scripts && cargo build
     ```
-### Player keys are setup here : *scripts\src\player.rs*
+
+### Godot docs :
+
+![Godot main scene preview](docs/godot_main_scene.png)
+![Godot player keys preview](docs/godot_player_keys.png)

@@ -13,6 +13,7 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.48691, 0 )
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.53814, 0 )
 collision_layer = 2
 script = ExtResource( 1 )
+forward = 91
 
 [node name="CollisionShape" type="CollisionShape" parent="Player"]
 transform = Transform( 1.01615, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2.53814, 0 )

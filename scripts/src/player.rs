@@ -4,14 +4,10 @@ use gdnative::api::*;
 
 const MOVEMENT_SPEED: f32 = 1.0;
 const MOVEMENT_JUMP_SCALE: f32 = 2.0;
-const MOVEMENT_KEY_FORWARD: i64 = GlobalConstants::KEY_Z;
-const MOVEMENT_KEY_BACKWARD: i64 = GlobalConstants::KEY_S;
-const MOVEMENT_KEY_LEFT: i64 = GlobalConstants::KEY_Q;
-const MOVEMENT_KEY_RIGHT: i64 = GlobalConstants::KEY_D;
-const MOVEMENT_KEY_JUMP: i64 = GlobalConstants::KEY_SPACE;
 
 #[derive(NativeClass)]
 #[inherit(KinematicBody)]
+#[register_with(Self::register_properties)]
 pub struct Player {
     controls: KeyboardControls,
     up_velocity: f32,
@@ -28,10 +24,52 @@ impl Player {
         }
     }
 
+    fn register_properties(builder: &ClassBuilder<Self>) {
+        builder
+            .add_property("Forward key")
+            .with_default(GlobalConstants::KEY_Z)
+            .with_getter(|player: &Player, _| player.controls.key_forward)
+            .with_setter(|player: &mut Player, _o: &KinematicBody, key_forward: i64| {
+                player.controls.key_forward = key_forward;
+            })
+            .done();
+        builder
+            .add_property("Backward key")
+            .with_default(GlobalConstants::KEY_S)
+            .with_getter(|player: &Player, _| player.controls.key_backward)
+            .with_setter(|player: &mut Player, _o: &KinematicBody, key_backward: i64| {
+                player.controls.key_backward = key_backward;
+            })
+            .done();
+        builder
+            .add_property("Turn left key")
+            .with_default(GlobalConstants::KEY_Q)
+            .with_getter(|player: &Player, _| player.controls.key_left)
+            .with_setter(|player: &mut Player, _o: &KinematicBody, key_left: i64| {
+                player.controls.key_left = key_left;
+            })
+            .done();
+        builder
+            .add_property("Turn right key")
+            .with_default(GlobalConstants::KEY_D)
+            .with_getter(|player: &Player, _| player.controls.key_right)
+            .with_setter(|player: &mut Player, _o: &KinematicBody, key_right: i64| {
+                player.controls.key_right = key_right;
+            })
+            .done();
+        builder
+            .add_property("Jump key")
+            .with_default(GlobalConstants::KEY_SPACE)
+            .with_getter(|player: &Player, _| player.controls.key_jump)
+            .with_setter(|player: &mut Player, _o: &KinematicBody, key_jump: i64| {
+                player.controls.key_jump = key_jump;
+            })
+            .done();
+    }
+
     #[export]
     fn _ready(&mut self, _owner: &KinematicBody) {
         Input::godot_singleton().set_mouse_mode(Input::MOUSE_MODE_CAPTURED);
-        godot_dbg!("ready 7");
     }
 
     #[export]
@@ -53,7 +91,7 @@ impl Player {
     }
 
     #[export]
-    fn _physics_process(&mut self, owner: &KinematicBody, delta: f32) {
+    fn _physics_process(&mut self, owner: &KinematicBody, _delta: f32) {
         let mut player_movement = Vector3::zero();
         let basis: Basis = owner.transform().basis;
         let mut x = basis.x();
@@ -64,13 +102,13 @@ impl Player {
         let player_input = Input::godot_singleton();
 
         // When player press forward key
-        if player_input.is_key_pressed(MOVEMENT_KEY_FORWARD) {
+        if player_input.is_key_pressed(self.controls.key_forward) {
             self.controls.forward = true;
             player_movement -= z;
         }
 
         // When player press backward key
-        if player_input.is_key_pressed(MOVEMENT_KEY_BACKWARD) {
+        if player_input.is_key_pressed(self.controls.key_backward) {
             self.controls.backward = true;
             player_movement += z;
         }
@@ -82,13 +120,13 @@ impl Player {
         }
 
         // When player press left key
-        if player_input.is_key_pressed(MOVEMENT_KEY_LEFT) {
+        if player_input.is_key_pressed(self.controls.key_left) {
             self.controls.left = true;
             player_movement -= x;
         }
 
         // When player press right key
-        if player_input.is_key_pressed(MOVEMENT_KEY_RIGHT) {
+        if player_input.is_key_pressed(self.controls.key_right) {
             self.controls.right = true;
             player_movement += x;
         }
@@ -100,7 +138,7 @@ impl Player {
         }
 
         // When player press right key
-        if player_input.is_key_pressed(MOVEMENT_KEY_JUMP) && self.controls.jump == false {
+        if player_input.is_key_pressed(self.controls.key_jump) && self.controls.jump == false {
             self.controls.jump = true;
             self.up_velocity = MOVEMENT_JUMP_SCALE;
         }
