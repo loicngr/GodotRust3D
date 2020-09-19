@@ -11,6 +11,7 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.48691, 0 )
 
 [node name="Player" type="KinematicBody" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.53814, 0 )
+collision_layer = 2
 script = ExtResource( 1 )
 
 [node name="CollisionShape" type="CollisionShape" parent="Player"]
@@ -22,8 +23,8 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2.53814, 0 )
 mesh = SubResource( 2 )
 material/0 = null
 
-[node name="Spatial" type="Spatial" parent="Player"]
+[node name="CameraRotation" type="Spatial" parent="Player"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.20084, 0 )
 
-[node name="Camera" type="Camera" parent="Player/Spatial"]
+[node name="Camera" type="Camera" parent="Player/CameraRotation"]
 transform = Transform( 1, 0, 0, 0, 0.962923, 0.269777, 0, -0.269777, 0.962923, 0, 0.780216, 5.74582 )

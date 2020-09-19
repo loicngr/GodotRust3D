@@ -19,6 +19,11 @@ config/name="SlenderMan"
 run/main_scene="res://Game.tscn"
 config/icon="res://icon.png"
 
+[layer_names]
+
+3d_physics/layer_1="Terrain"
+3d_physics/layer_2="Player"
+
 [rendering]
 
 environment/default_environment="res://default_env.tres"
